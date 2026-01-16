@@ -6,27 +6,37 @@
 /*   By: aline-arthur <aline-arthur@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:06:30 by aline-arthu       #+#    #+#             */
-/*   Updated: 2026/01/07 16:18:18 by aline-arthu      ###   ########.fr       */
+/*   Updated: 2026/01/16 11:59:27 by aline-arthu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
+
 
 int main() {
-    //test form constructor exceptions
-    try { Form("bad", 0, 10); 
-    } catch(std::exception& e) { std::cout << e.what() << std::endl; }
+    Bureaucrat president("President", 1);   // Can do everything
+    Bureaucrat mid("Mid", 50);              // Some forms only
     
-    Form form1("Contract", 50, 30);
-    std::cout << form1 << std::endl;  // Contract, sign 50, exec 30, signed no.
+    // 1. Shrubbery (145/137)
+    ShrubberyCreationForm tree("garden");
+    president.signForm(tree);
+    president.executeForm(tree);  // Creates garden_shrubbery
     
-    Bureaucrat high("High", 40);
-    Bureaucrat low("Low", 60);
+    // 2. Robotomy (72/45) 
+    RobotomyRequestForm robot("Bender");
+    president.signForm(robot);
+    president.executeForm(robot);  // Drill + 50/50
     
-    std::cout << high << std::endl;
-    high.signForm(form1);  // Success: High signs Contract
+    // 3. Presidential (25/5)
+    PresidentialPardonForm pardon("Marvin");
+    president.signForm(pardon);
+    president.executeForm(pardon);  // Pardoned!
     
-    std::cout << form1 << std::endl;  // Now signed yes
-    low.signForm(form1);   // Fail: Low cannot sign because grade too low
+    // Test failures
+    mid.signForm(pardon);  // Fail: 50 > 25
+    mid.executeForm(tree); // Fail: unsigned or low grade
     return (0);
 }

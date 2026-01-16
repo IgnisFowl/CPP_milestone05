@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Aform.hpp                                          :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aline-arthur <aline-arthur@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:00:26 by aline-arthu       #+#    #+#             */
-/*   Updated: 2026/01/14 09:38:13 by aline-arthu      ###   ########.fr       */
+/*   Updated: 2026/01/16 11:22:56 by aline-arthu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class AForm {
 
         void beSigned(Bureaucrat& bureaucrat);
 
-        virtual void execute(Bureaucrat const& executor) const;
+        virtual void execute(Bureaucrat const& executor) const = 0;
 
         void checkCanExecute(Bureaucrat const& executor) const;
         
@@ -56,7 +56,7 @@ class AForm {
         class NotSignedException : public std::exception {
             public:
                 virtual const char* what() const throw();
-        }
+        };
 };
 
 std::ostream& operator<<(std::ostream& os, AForm const& form);

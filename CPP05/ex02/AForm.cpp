@@ -6,7 +6,7 @@
 /*   By: aline-arthur <aline-arthur@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:08:03 by aline-arthu       #+#    #+#             */
-/*   Updated: 2026/01/14 09:51:31 by aline-arthu      ###   ########.fr       */
+/*   Updated: 2026/01/16 11:24:44 by aline-arthu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 AForm::AForm(std::string name, int signGrade, int executeGrade) : _name(name), _signed(false), _signGrade(signGrade), _executeGrade(executeGrade) {
     if (_signGrade < 1 || _executeGrade < 1)
-        throw Form::GradeTooHighException();
+        throw AForm::GradeTooHighException();
     if (_signGrade > 150 || _executeGrade > 150)
-        throw Form::GradeTooLowException();
+        throw AForm::GradeTooLowException();
 }
 
 AForm::AForm() : _name("Default"), _signed(false), _signGrade(150), _executeGrade(150) {}
 
-AForm::AForm(Form const& other) : _name(other._name), _signed(other._signed), _signGrade(other._signGrade), _executeGrade(other._executeGrade) {}
+AForm::AForm(AForm const& other) : _name(other._name), _signed(other._signed), _signGrade(other._signGrade), _executeGrade(other._executeGrade) {}
 
-AForm& AForm::operator=(Form const& other) {
+AForm& AForm::operator=(AForm const& other) {
     if (this != &other) {
         const_cast<bool&>(_signed) = other._signed; //mutable signed
     }
@@ -33,7 +33,7 @@ AForm& AForm::operator=(Form const& other) {
 AForm::~AForm() {}
 
 std::string AForm::getName() const { return _name; }
-bool AForm::getSigned() const { return _signed; }
+bool AForm::isSigned() const { return _signed; }
 int AForm::getSignGrade() const { return _signGrade; }
 int AForm::getExecuteGrade() const { return _executeGrade; }
 
@@ -56,21 +56,21 @@ void AForm::checkCanExecute(Bureaucrat const& executor) const {
 }
 
 const char* AForm::GradeTooHighException::what() const throw() {
-    return "Form grade too high";
+    return "AForm grade too high";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-    return "Form grade too low";
+    return "AForm grade too low";
 }
 
 const char* AForm::NotSignedException::what() const throw() {
-    return "Form not signed";
+    return "AForm not signed";
 }
 
 
 std::ostream& operator<<(std::ostream& os, AForm const& form) {
     os << form.getName() << ", form sign grade " << form.getSignGrade()
         << ", execute grade " << form.getExecuteGrade()
-        << ", signed: " << (form.getSigned() ? "yes" : "no") << ".";
+        << ", signed: " << (form.isSigned() ? "yes" : "no") << ".";
     return os;
 }
