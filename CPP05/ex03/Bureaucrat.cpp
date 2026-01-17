@@ -6,7 +6,7 @@
 /*   By: aarie-c2 <aarie-c2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:23:37 by aline-arthu       #+#    #+#             */
-/*   Updated: 2026/01/17 11:23:58 by aarie-c2         ###   ########.fr       */
+/*   Updated: 2026/01/17 11:22:19 by aarie-c2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,23 @@ std::ostream& operator<<(std::ostream& os, Bureaucrat const& bureaucrat) {
     return os;
 }
 
-void Bureaucrat::signForm(Form &form) {
+void Bureaucrat::signForm(AForm &form) {
     try {
         form.beSigned(*this);
         std::cout << this->getName() << " signs " << form.getName() << std::endl;
     } catch (std::exception& e) {
         std::cout << this->getName() << " cannot sign " << form.getName()
+                << " because " << e.what() << std::endl;
+    }
+}
+
+void Bureaucrat::executeForm(AForm const& form) const {
+    try {
+        form.execute(*this);
+        std::cout <<  _name << " executes " << form.getName() << std::endl;
+    }
+    catch (std::exception& e) {
+        std::cout << _name << " cannot execute " << form.getName()
                 << " because " << e.what() << std::endl;
     }
 }

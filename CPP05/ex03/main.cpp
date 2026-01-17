@@ -6,7 +6,7 @@
 /*   By: aarie-c2 <aarie-c2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:06:30 by aline-arthu       #+#    #+#             */
-/*   Updated: 2026/01/17 11:23:32 by aarie-c2         ###   ########.fr       */
+/*   Updated: 2026/01/17 11:35:41 by aarie-c2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,35 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 
 int main() {
-    Bureaucrat president("President", 1);   // Can do everything
-    Bureaucrat mid("Mid", 50);              // Some forms only
-    
-    // 1. Shrubbery (145/137)
-    ShrubberyCreationForm tree("garden");
-    president.signForm(tree);
-    president.executeForm(tree);  // Creates garden_shrubbery
-    
-    // 2. Robotomy (72/45) 
-    RobotomyRequestForm robot("Bender");
-    president.signForm(robot);
-    president.executeForm(robot);  // Drill + 50/50
-    
-    // 3. Presidential (25/5)
-    PresidentialPardonForm pardon("Marvin");
-    president.signForm(pardon);
-    president.executeForm(pardon);  // Pardoned!
-    
-    // Test failures
-    mid.signForm(pardon);  // Fail: 50 > 25
-    mid.executeForm(tree); // Fail: unsigned or low grade
+    Intern someRandomIntern;
+    Bureaucrat boss("Boss", 1);
+
+    AForm* f1 = someRandomIntern.makeForm("shrubbery creation", "home");
+    AForm* f2 = someRandomIntern.makeForm("robotomy request", "Bender");
+    AForm* f3 = someRandomIntern.makeForm("presidential pardon", "Marvin");
+
+    (void)someRandomIntern.makeForm("unknown form", "Nobody");
+      
+    if (f1) {
+        boss.signForm(*f1);
+        boss.executeForm(*f1);
+    }
+    if (f2) {
+        boss.signForm(*f2);
+        boss.executeForm(*f2);
+    }
+    if (f3) {
+        boss.signForm(*f3);
+        boss.executeForm(*f3);
+    }
+
+    delete f1;
+    delete f2;
+    delete f3;
+    // f4 is null, no delete
     return (0);
 }
